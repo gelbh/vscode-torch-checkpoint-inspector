@@ -1,0 +1,24 @@
+# IDE and version control
+.vscode/**
+.git/**
+.gitignore
+
+# Dependencies
+node_modules/**
+
+# Build output
+*.vsix
+out/
+dist/
+
+# Development-only
+scripts/**
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and env
+*.log
+.env
+.env.*

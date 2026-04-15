@@ -1,0 +1,107 @@
+{
+  "name": "vscode-torch-checkpoint-inspector",
+  "displayName": "Torch checkpoint inspector",
+  "publisher": "gelbhart",
+  "description": "Inspect .pt / .pth PyTorch checkpoints in a custom editor (structure, tensors, dtypes).",
+  "version": "0.2.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization",
+    "Machine Learning"
+  ],
+  "activationEvents": [
+    "onCustomEditor:gelbhart.torchCheckpointInspector",
+    "onCommand:torchCheckpointInspector.openWithViewer"
+  ],
+  "main": "./extension.js",
+  "icon": "icon.png",
+  "contributes": {
+    "languages": [
+      {
+        "id": "torch-checkpoint",
+        "aliases": [
+          "Torch checkpoint",
+          "PyTorch checkpoint"
+        ],
+        "extensions": [
+          ".pt",
+          ".pth"
+        ],
+        "icon": {
+          "light": "./media/pt-file-icon.png",
+          "dark": "./media/pt-file-icon.png"
+        }
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "gelbhart.torchCheckpointInspector",
+        "displayName": "Torch checkpoint inspector",
+        "selector": [
+          {
+            "filenamePattern": "**/*.pt"
+          },
+          {
+            "filenamePattern": "**/*.pth"
+          },
+          {
+            "filenamePattern": "**/*.PT"
+          },
+          {
+            "filenamePattern": "**/*.PTH"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "torchCheckpointInspector.openWithViewer",
+        "title": "Torch checkpoint inspector: Open with Viewer"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "torchCheckpointInspector.openWithViewer",
+          "when": "resourceExtname == '.pt' || resourceExtname == '.pth'",
+          "group": "navigation@+10"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "torchCheckpointInspector.openWithViewer",
+          "when": "resourceExtname == '.pt' || resourceExtname == '.pth' || editorLangId == 'torch-checkpoint'"
+        }
+      ]
+    },
+    "configurationDefaults": {
+      "workbench.editorAssociations": {
+        "*.pt": "gelbhart.torchCheckpointInspector",
+        "*.pth": "gelbhart.torchCheckpointInspector"
+      }
+    },
+    "configuration": {
+      "title": "Torch checkpoint inspector",
+      "properties": {
+        "torchCheckpointInspector.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the Python interpreter that has PyTorch installed. Leave empty to use the Python extension’s selected interpreter, then python3 on PATH."
+        },
+        "torchCheckpointInspector.allowUnsafeLoad": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, falls back to torch.load(..., weights_only=False) when safe loading fails. WARNING: unpickling can execute arbitrary code. Only enable for trusted files."
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gelbhart/vscode-torch-checkpoint-inspector.git"
+  },
+  "license": "MIT"
+}
