@@ -1,5 +1,6 @@
 # IDE and version control
 .vscode/**
+.github/**
 .git/**
 .gitignore
 
