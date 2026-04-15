@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import importlib
 import json
+import os
 import re
 import sys
 import traceback
@@ -337,10 +338,16 @@ def main() -> int:
     try:
         obj, load_mode = load_checkpoint(path, args.unsafe)
         root = summarize(obj, 0)
+        try:
+            file_size_bytes = int(os.path.getsize(path))
+        except OSError:
+            file_size_bytes = None
         _emit(
             {
                 "ok": True,
                 "path": path,
+                "file_name": os.path.basename(path),
+                "file_size_bytes": file_size_bytes,
                 "torch_version": torch.__version__,
                 "load_mode": load_mode,
                 "unsafe_requested": bool(args.unsafe),
