@@ -101,7 +101,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gelbhart/vscode-torch-checkpoint-inspector.git"
+    "url": "https://github.com/gelbh/vscode-torch-checkpoint-inspector.git"
   },
   "license": "MIT"
 }
