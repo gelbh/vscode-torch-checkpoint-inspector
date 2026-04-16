@@ -3,7 +3,7 @@
   "displayName": "Torch checkpoint inspector",
   "publisher": "gelbhart",
   "description": "Inspect .pt / .pth PyTorch checkpoints in a custom editor (structure, tensors, dtypes).",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "engines": {
     "vscode": "^1.85.0"
   },
