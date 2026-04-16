@@ -314,13 +314,38 @@ def load_checkpoint(path: str, unsafe: bool) -> tuple[Any, str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Summarize a .pt / .pth file as JSON.")
-    parser.add_argument("path", help="Checkpoint file path")
+    parser.add_argument(
+        "--probe-torch",
+        action="store_true",
+        help="Print JSON indicating whether torch is importable, then exit (no checkpoint path).",
+    )
+    parser.add_argument("path", nargs="?", default=None, help="Checkpoint file path")
     parser.add_argument(
         "--unsafe",
         action="store_true",
         help="Allow weights_only=False after safe load fails (trusted files only).",
     )
     args = parser.parse_args()
+
+    if args.probe_torch:
+        try:
+            import torch
+
+            _emit({"ok": True, "probe": True, "torch_version": torch.__version__})
+            return 0
+        except ImportError:
+            _emit(
+                {
+                    "ok": False,
+                    "error": "PyTorch is not installed in this Python environment.",
+                    "hint": "Install torch in the interpreter configured for Torch checkpoint inspector.",
+                    "error_code": "NO_TORCH",
+                }
+            )
+            return 1
+
+    if not args.path:
+        parser.error("path is required unless using --probe-torch")
 
     try:
         import torch
@@ -330,6 +355,7 @@ def main() -> int:
                 "ok": False,
                 "error": "PyTorch is not installed in this Python environment.",
                 "hint": "Install torch in the interpreter configured for Torch checkpoint inspector.",
+                "error_code": "NO_TORCH",
             }
         )
         return 1

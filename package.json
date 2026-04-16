@@ -16,6 +16,15 @@
     "onCommand:torchCheckpointInspector.openWithViewer"
   ],
   "main": "./extension.js",
+  "files": [
+    "extension.js",
+    "lib",
+    "python/inspect_checkpoint.py",
+    "media",
+    "icon.png",
+    "README.md",
+    "LICENSE"
+  ],
   "icon": "icon.png",
   "contributes": {
     "languages": [
@@ -95,6 +104,11 @@
           "type": "boolean",
           "default": false,
           "description": "If true, falls back to torch.load(..., weights_only=False) when safe loading fails. WARNING: unpickling can execute arbitrary code. Only enable for trusted files."
+        },
+        "torchCheckpointInspector.probeTorchBeforeInspect": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, runs a quick torch import check before loading the checkpoint. Avoids heavy work when the interpreter has no PyTorch; adds one extra Python process per refresh."
         }
       }
     }
